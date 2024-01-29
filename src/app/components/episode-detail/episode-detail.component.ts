@@ -18,7 +18,6 @@ export class EpisodeDetailComponent implements OnInit {
   constructor(private rickAndMortyApiService: RickAndMortyApiService) { }
 
   ngOnInit(): void {
-    console.log(this.episode);
     this.getMultipleCharacters()
   }
 
@@ -31,7 +30,6 @@ export class EpisodeDetailComponent implements OnInit {
 
     this.rickAndMortyApiService.GetMultipleCharacters(IdCharacterList).pipe(takeWhile(() => this.alive))
       .subscribe(async (x) => {
-        console.log(x);
         this.isSpinning = false
         this.characters = x
 
