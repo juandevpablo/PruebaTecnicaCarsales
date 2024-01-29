@@ -1,0 +1,107 @@
+<div nz-row>
+  <div nz-col [nzMd]="{ span: 20 }" [nzLg]="{ offset: 3, span: 18 }">
+    <nz-page-header
+      class="site-page-header"
+      [nzTitle]="title"
+      [nzSubtitle]="subtitle"
+    ></nz-page-header>
+    <nz-spin [nzSpinning]="isSpinning">
+      <nz-table
+        [nzTitle]="titleTemplate"
+        [nzData]="episodeList.results"
+        [nzTotal]="episodeList.info.count"
+        [nzFrontPagination]="false"
+        [nzShowTotal]="footerTemplate"
+        [nzPageSize]="pageSize"
+        (nzPageIndexChange)="pageIndexChange($event)"
+      >
+        <ng-template #titleTemplate>
+          <form
+            nz-form
+            [formGroup]="filterForm"
+            autocomplete="off"
+            (ngSubmit)="submitForm($event)"
+          >
+            <div nz-row class="margin-filters">
+              <div nz-col [nzSm]="{ span: 24 }" [nzLg]="{ span: 6 }">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="24" [nzXs]="24">
+                    <nz-form-label class="nz-custom-label">Name</nz-form-label>
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                      <input
+                        class="border-radious"
+                        type="text"
+                        formControlName="NameEpisode"
+                        nz-input
+                        placeholder="input search text"
+                      />
+                    </nz-input-group>
+                    <ng-template #suffixIconButton>
+                      <button
+                        class="border-radious"
+                        nz-button
+                        nzType="primary"
+                        nzSearch
+                      >
+                        <span nz-icon nzType="search"></span>
+                      </button>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Air date</th>
+            <th>Episode</th>
+            <th nzWidth="100px">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of episodeList.results">
+            <td>{{ data.name }}</td>
+            <td>{{ data.air_date }}</td>
+            <td>{{ data.episode }}</td>
+            <td class="col-actions">
+              <button
+                nz-tooltip
+                nzTooltipTitle="See episode details"
+                nz-button
+                nzType="primary"
+                nzShape="circle"
+                (click)="createComponentModal(data)"
+              >
+                <i nz-icon nzType="login" nzTheme="outline"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-spin>
+
+    <ng-template #footerTemplate>
+      <div
+        nz-row
+        nzJustify="space-around"
+        nzAlign="middle"
+        *ngIf="episodeList.results"
+      >
+        <div nz-col nzSpan="24" style="text-align: center">
+          {{
+            "Showing " +
+              (episodeList.info.count > pageSize
+                ? pageSize
+                : episodeList.info.count) +
+              " records of
+          " +
+              episodeList.info.count +
+              " total"
+          }}
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
