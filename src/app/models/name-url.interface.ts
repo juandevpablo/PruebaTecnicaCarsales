@@ -5,5 +5,4 @@ import { InfoInterface } from "./info.interface";
 export interface NameUrlInterface {
     name: string;
     url: string;
-
 }
