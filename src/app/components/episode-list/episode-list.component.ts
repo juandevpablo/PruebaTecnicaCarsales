@@ -43,11 +43,9 @@ export class EpisodeListComponent implements OnInit {
     this.rickAndMortyApiService.GetAllEpisode(page, textName).pipe(takeWhile(() => this.alive))
       .subscribe(x => {
         this.episodeList = x;
-        console.log(x);
         this.changeStateSpinning();
 
       }, error => {
-        console.log(error);
         this.createMessage("error", error.error.error)
         this.changeStateSpinning();
         this.episodeList = { info: {} as InfoInterface } as ResponseInterface;
@@ -82,7 +80,6 @@ export class EpisodeListComponent implements OnInit {
   }
 
   public submitForm(event: any): void {
-    console.log(event);
     this.changeStateSpinning()
     this.GetEpisodeList(0, this.filterForm.controls["NameEpisode"].value)
 

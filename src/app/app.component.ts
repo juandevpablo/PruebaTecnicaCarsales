@@ -9,6 +9,5 @@ export class AppComponent {
   title = 'app-riandmo';
   constructor()
   {
-    console.log("que pasa");
   }
 }
